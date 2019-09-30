@@ -5,7 +5,6 @@
         <i class="fa fa-undo" aria-hidden="true"> Go Back</i>
         {{-- {{dd(Auth::user()->favorites(App\Post::class)->get())}} --}}
     </a>
-    <hr>
     <div class="row auto">
         @guest
         <div class="col-2 pl-4 ml-4">
@@ -43,10 +42,10 @@
         </div>
         @endguest
         <div class="col-md-8">
-            <h1>{{$post->title}}</h1>
+            <h1 class="display-4 text-center">{{$post->title}}</h1>
             <small class = 'text muted pull-right mb-1'>by {{$post->user->name}} on {{$post->created_at->format('d M y')}}</small>
             &nbsp; <br> <br>
-            <img style="width:100%;"  class="rounded" src = "/storage/cover_image/{{$post->cover_image}}" alt="cover_image">
+            <img style="width:100%;"class="rounded" src = "/storage/cover_image/{{$post->cover_image}}" alt="cover_image">
             <br><br>
             <h6 class="text-muted float-right">  </h6>
             <div class="text-justify">
@@ -57,13 +56,19 @@
     <hr>
     @if (!Auth::guest())
         @if(Auth::user()->id == $post->user->id)
-            <a href="/posts/{{$post->id}}/edit" class="btn btn-warning">
-                <i class="fa fa-pencil" aria-hidden="true"> Edit</i>
-            </a>
-            {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right']) !!}
-                {{Form::hidden('_method', 'DELETE')}}
-                {{Form::submit('Delete', ['class' => 'btn btn-danger    '])}}
-            {!! Form::close() !!}
+            <div class="row justify-content-center">
+                    <div class="col-1">
+                            <a href="/posts/{{$post->id}}/edit" class="btn btn-warning">
+                                <i class="fa fa-pencil" aria-hidden="true">Edit</i>
+                            </a>
+                    </div>
+                    <div class="col-1">
+                            {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right']) !!}
+                            {{Form::hidden('_method', 'DELETE')}}
+                            {{Form::submit('Delete', ['class' => 'btn btn-danger    '])}}
+                        {!! Form::close() !!}
+                    </div>
+                </div>
         @endif
     @endif
 @endsection
